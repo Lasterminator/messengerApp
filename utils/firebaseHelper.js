@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "@firebase/app";
+import { getAuth } from "@firebase/auth";
 
 export const getFirebaseApp = () => {
   // TODO: Add SDKs for Firebase products that you want to use
@@ -8,9 +9,13 @@ export const getFirebaseApp = () => {
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
-
+   
   };
 
   // Initialize Firebase
-  return initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
+  console.log({App: app})
+  const auth = getAuth(app);
+  console.log("HESEFRSA",{auth})
+  return auth
 };
