@@ -14,9 +14,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SettingScreen from "./screens/SettingScreen";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AppNavigator from "./navigation/AppNavigator";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 SplashScreen.preventAutoHideAsync();
-
 
 export default function App() {
   const [isAppLoaded, setIsAppLoaded] = useState(false);
@@ -61,9 +62,11 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider style={styles.container} onLayout={onLayout}>
-      <AppNavigator />
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider style={styles.container} onLayout={onLayout}>
+        <AppNavigator />
+      </SafeAreaProvider>
+    </Provider>
   );
 }
 
