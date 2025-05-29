@@ -26,7 +26,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingScreen}
+        component={SettingsScreen}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({color, size}) => {
@@ -59,7 +59,7 @@ const MainNavigator = (props) => {
         />
         <Stack.Screen
           name="Settings"
-          component={ChatSettingScreen}
+          component={ChatSettingsScreen}
           options={{
             gestureEnabled: false,
             headerTitle: "Settings",

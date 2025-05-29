@@ -6,16 +6,12 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import ChatListScreen from "./screens/ChatListScreen";
-import ChatSettingsScreen from "./screens/ChatSettingsScreen";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import SettingsScreen from "./screens/SettingsScreen";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AppNavigator from "./navigation/AppNavigator";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// AsyncStorage.clear(); 
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,7 +38,7 @@ export default function App() {
           thinItalic: require("./assets/fonts/Roboto-ThinItalic.ttf"),
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsAppLoaded(true);
       }
