@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// AsyncStorage.clear(); 
+// AsyncStorage.clear();
 
 SplashScreen.preventAutoHideAsync();
 
