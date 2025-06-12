@@ -39,7 +39,6 @@
     "react-native-web": "^0.20.0",
     "react-navigation-header-buttons": "^10.0.0",
     "react-redux": "^9.2.0",
-    "undefined": "@expo/vector-icons/Ionicons",
     "validate.js": "^0.13.1"
   },
   "devDependencies": {

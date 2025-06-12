@@ -113,8 +113,12 @@ const NewChatScreen = (props) => {
 
       setSelectedUsers(newSelectedUsers);
     } else {
-      props.navigation.navigate("ChatList", {
-        selectedUserId: userId,
+      // Navigate to ChatScreen directly with the selected user
+      props.navigation.navigate("ChatScreen", {
+        newChatData: {
+          users: [userId, userData.userId],
+          isGroupChat: false,
+        },
       });
     }
   };

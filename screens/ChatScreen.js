@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   FlatList,
   Image,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -35,6 +36,7 @@ import {
 import AwesomeAlert from "react-native-awesome-alerts";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ChatScreen = (props) => {
   const [chatUsers, setChatUsers] = useState([]);
@@ -50,10 +52,11 @@ const ChatScreen = (props) => {
   const userData = useSelector((state) => state.auth.userData);
   const storedUsers = useSelector((state) => state.users.storedUsers);
   const storedChats = useSelector((state) => state.chats.chatsData);
-  const chatMessages = useSelector((state) => {
+  const messagesData = useSelector((state) => state.messages.messagesData);
+  const chatMessages = useMemo(() => {
     if (!chatId) return [];
 
-    const chatMessagesData = state.messages.messagesData[chatId];
+    const chatMessagesData = messagesData[chatId];
 
     if (!chatMessagesData) return [];
 
@@ -68,7 +71,7 @@ const ChatScreen = (props) => {
     }
 
     return messageList;
-  });
+  }, [chatId, messagesData]);
 
   const chatData =
     (chatId && storedChats[chatId]) || props.route?.params?.newChatData || {};
@@ -81,6 +84,24 @@ const ChatScreen = (props) => {
       otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`
     );
   };
+
+  // Handle Android back button
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        props.navigation.goBack();
+        return true;
+      };
+
+      if (Platform.OS === "android") {
+        const subscription = BackHandler.addEventListener(
+          "hardwareBackPress",
+          onBackPress
+        );
+        return () => subscription?.remove();
+      }
+    }, [props.navigation])
+  );
 
   useEffect(() => {
     if (!chatData) return;

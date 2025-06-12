@@ -237,7 +237,6 @@ export const addUsersToChat = async (
 
 const sendPushNotificationForUsers = (chatUsers, title, body, chatId) => {
   chatUsers.forEach(async (uid) => {
-    console.log("test");
     const tokens = await getUserPushTokens(uid);
 
     for (const key in tokens) {

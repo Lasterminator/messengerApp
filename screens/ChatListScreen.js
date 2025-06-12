@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   View,
   Text,
@@ -22,12 +22,12 @@ const ChatListScreen = (props) => {
 
   const userData = useSelector((state) => state.auth.userData);
   const storedUsers = useSelector((state) => state.users.storedUsers);
-  const userChats = useSelector((state) => {
-    const chatsData = state.chats.chatsData;
-    return Object.values(chatsData).sort((a, b) => {
+  const userChats = useSelector((state) => state.chats.chatsData);
+  const sortedUserChats = useMemo(() => {
+    return Object.values(userChats).sort((a, b) => {
       return new Date(b.updatedAt) - new Date(a.updatedAt);
     });
-  });
+  }, [userChats]);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -94,7 +94,7 @@ const ChatListScreen = (props) => {
       </View>
 
       <FlatList
-        data={userChats}
+        data={sortedUserChats}
         renderItem={(itemData) => {
           const chatData = itemData.item;
           const chatId = chatData.key;

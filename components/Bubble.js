@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import {
   Image,
   StyleSheet,
@@ -57,9 +57,11 @@ const Bubble = (props) => {
     imageUrl,
   } = props;
 
-  const starredMessages = useSelector(
-    (state) => state.messages.starredMessages[chatId] ?? {}
-  );
+  const allStarredMessages = useSelector((state) => state.messages.starredMessages);
+  const starredMessages = useMemo(() => {
+    return allStarredMessages[chatId] ?? {};
+  }, [allStarredMessages, chatId]);
+
   const storedUsers = useSelector((state) => state.users.storedUsers);
 
   const bubbleStyle = { ...styles.container };
